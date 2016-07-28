@@ -31,6 +31,9 @@ public class FlightSearchService {
 
 	@Autowired
 	private AirlineService airlineService;
+	
+	@Autowired
+	private FlightPriceComparator flightPriceComparator;
 
 	public FlightSearchResponse searchFlights(FlightSearchRequest flightSearchRequest) {
 		FlightSearchResponse flightSearchResponse = new FlightSearchResponse();
@@ -93,6 +96,12 @@ public class FlightSearchService {
 						}
 					}
 				}
+			}
+			if(flightSearchResponse.getArrivalFlightList() != null){
+				flightSearchResponse.getArrivalFlightList().sort(flightPriceComparator);
+			}
+			if(flightSearchResponse.getDepartureFlightList() != null){
+				flightSearchResponse.getDepartureFlightList().sort(flightPriceComparator);
 			}
 		} catch (Exception exception) {
 			logger.error("Exception occured while searching Flight Search {}", exception);
