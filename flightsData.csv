@@ -1,0 +1,11 @@
+originCode,destinationCode,takeoffTime,landingTime,price,airlineCode,class,flightNumber
+DEL,BOM,6:30AM,8:30AM,5500,G8,"         ""Economy""",100
+DEL,BOM,6:50AM,8:50AM,4400,AI,"         ""Economy""",100
+DEL,BOM,7:10AM,9:10AM,4600,9W,"         ""Economy""",100
+DEL,BOM,8:30AM,10:30AM,7800,SG,"         ""Economy""",100
+DEL,BOM,9:30AM,11:30AM,8700,6E,"         ""Economy""",100
+DEL,BOM,10:30AM,12:30PM,5000,G8,"         ""Economy""",101
+DEL,BOM,13:30PM,15:30PM,9800,AI,"         ""Economy""",101
+DEL,BOM,14:00PM,16:00PM,4100,9W,"         ""Economy""",101
+DEL,BOM,16:00PM,18:00PM,4600,SG,"         ""Economy""",101
+DEL,BOM,20:00PM,22:00PM,5700,6E,"         ""Economy""",101
