@@ -3,6 +3,7 @@ package com.ixigo.flights.services;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -17,15 +18,17 @@ import com.ixigo.flights.utilities.FlightCSVReaderUtility;
 @Service
 public class AirPortService {
 
-	@Value("${flight.airline.timeout}")
-	private Integer timeout;
-	private LoadingCache<String, List<Airport>> airPortCache = CacheBuilder.newBuilder().refreshAfterWrite(timeout, TimeUnit.MINUTES)
-			.build(new CacheLoader<String, List<Airport>>() {
-				@Override
-				public List<Airport> load(String query) throws Exception {
-					return FlightCSVReaderUtility.readAirPortCSV();
-				}
-			});
+	private LoadingCache<String, List<Airport>> airPortCache;
+
+	@Autowired
+	public AirPortService(@Value("${flight.airline.timeout}") Integer timeout) {
+		airPortCache = CacheBuilder.newBuilder().refreshAfterWrite(timeout, TimeUnit.MINUTES).build(new CacheLoader<String, List<Airport>>() {
+			@Override
+			public List<Airport> load(String query) throws Exception {
+				return FlightCSVReaderUtility.readAirPortCSV();
+			}
+		});
+	}
 
 	public List<Airport> searchAirPorts(String airport) {
 		return FlightCSVReaderUtility.readAirPortCSV();

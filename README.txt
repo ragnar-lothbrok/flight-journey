@@ -31,3 +31,31 @@ http://localhost:8888/flights/airline
 	},
 	"flightClass": "Economy"
 }
+
+
+=========================================================
+
+{
+	"departureFlightBooking": {
+		"sourceAirport": {
+			"airportCode": "DEL"
+		},
+		"destintionAirport": {
+			"airportCode": "BOM"
+		},
+		"journeyDate": 1469719382848
+	},
+	"arrivalFlightBooking": {
+		"sourceAirport": {
+			"airportCode": "BOM"
+		},
+		"destintionAirport": {
+			"airportCode": "DEL"
+		},
+		"journeyDate": 1469719388848
+	},
+	"flightPassenger": {
+		"adultcount": 5
+	},
+	"flightClass": "Economy"
+}
