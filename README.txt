@@ -1,4 +1,5 @@
-http://localhost:8888/flights/airport?airPort=wewe
+http://localhost:8888/flights/airport?airPort=mu
+[{"airportCode":"BOM","cityName":"Mumbai","airportName":"DEL Chatarpati Shivaji Airport"}]
 
 http://localhost:8888/flights/airline
 

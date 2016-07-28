@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.ixigo.flights.exceptions.AirPortSearchException;
 import com.ixigo.flights.models.AirLine;
 import com.ixigo.flights.models.Airport;
-import com.ixigo.flights.models.AirportSearch;
 import com.ixigo.flights.models.Flight;
 import com.ixigo.flights.models.FlightSearch;
 import com.ixigo.flights.models.FlightSearchRequest;
@@ -120,7 +119,7 @@ public class FlightSearchService {
 			flight.setPrice(rawFlightData.getPrice());
 
 			List<Airport> airPortList = airPortService.allAirports();
-			AirportSearch airport = new AirportSearch();
+			Airport airport = new Airport();
 			airport.setAirportCode(rawFlightData.getOriginCode());
 
 			// Set Source AirPort

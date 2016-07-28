@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import com.csvreader.CsvReader;
 import com.ixigo.flights.models.AirLine;
 import com.ixigo.flights.models.Airport;
-import com.ixigo.flights.models.AirportSearch;
 import com.ixigo.flights.models.RawFlightData;
 
 public class FlightCSVReaderUtility {
@@ -47,7 +46,7 @@ public class FlightCSVReaderUtility {
 				String airPortCode = csvReader.get("airportCode");
 				String cityName = csvReader.get("cityName");
 				String airPortName = csvReader.get("airportName");
-				airPortList.add(new AirportSearch(airPortCode.trim(), cityName.trim(), airPortName.trim(), null, null));
+				airPortList.add(new Airport(airPortCode.trim(), cityName.trim(), airPortName.trim()));
 			}
 		} catch (Exception exception) {
 			logger.error("Excepiton occred  {}", exception);
