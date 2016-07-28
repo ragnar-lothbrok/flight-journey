@@ -7,11 +7,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Airport implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	protected static final long serialVersionUID = 1L;
 
-	private String airportCode;
+	protected String airportCode;
 
-	private String cityName;
+	protected String cityName;
 
 	private String airportName;
 
@@ -48,5 +48,29 @@ public class Airport implements Serializable {
 		this.cityName = cityName;
 		this.airportName = airportName;
 	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((airportCode == null) ? 0 : airportCode.hashCode());
+		return result;
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Airport other = (Airport) obj;
+		if (airportCode == null) {
+			if (other.airportCode != null)
+				return false;
+		} else if (!airportCode.equals(other.airportCode))
+			return false;
+		return true;
+	}
 }

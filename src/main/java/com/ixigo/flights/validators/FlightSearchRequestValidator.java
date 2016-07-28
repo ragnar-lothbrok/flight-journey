@@ -1,17 +1,23 @@
 package com.ixigo.flights.validators;
 
+import java.util.Calendar;
+
 import org.springframework.stereotype.Service;
 
 import com.ixigo.flights.exceptions.FlightSearchRequestException;
 import com.ixigo.flights.models.FlightSearchRequest;
 
+/**
+ * This will validate Flight Search Request.
+ * @author raghunandangupta
+ *
+ */
 @Service
-public class FlightSearchRequestValidator implements Validator {
+public class FlightSearchRequestValidator implements IValidator<FlightSearchRequest> {
 
-	@Override
-	public void validate(Object obj) throws FlightSearchRequestException {
+	public Boolean isValid(FlightSearchRequest obj) {
 		boolean isFlightSearchValid = true;
-
+		Long currentTime = Calendar.getInstance().getTimeInMillis();
 		if (obj == null) {
 			isFlightSearchValid = false;
 		} else {
@@ -19,12 +25,20 @@ public class FlightSearchRequestValidator implements Validator {
 			if (flightSearchRequest.getDepartureFlightBooking() == null) {
 				isFlightSearchValid = false;
 			} else {
-				// TODO
+				if ((flightSearchRequest.getDepartureFlightBooking().getJourneyDate() != null
+						&& flightSearchRequest.getDepartureFlightBooking().getJourneyDate().longValue() > currentTime)
+						|| (flightSearchRequest.getArrivalFlightBooking().getJourneyDate() != null
+								&& flightSearchRequest.getDepartureFlightBooking().getJourneyDate().longValue() > flightSearchRequest
+										.getArrivalFlightBooking().getJourneyDate().longValue()
+								&& flightSearchRequest.getArrivalFlightBooking().getJourneyDate().longValue() > currentTime)) {
+					isFlightSearchValid = false;
+				}
 			}
 		}
 		if (!isFlightSearchValid) {
 			throw new FlightSearchRequestException();
 		}
+		return true;
 	}
 
 }

@@ -1,7 +1,6 @@
 package com.ixigo.flights.models;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class RawFlightData implements Serializable {
 
@@ -9,8 +8,8 @@ public class RawFlightData implements Serializable {
 
 	private String originCode;
 	private String destinationCode;
-	private Date takeoffTime;
-	private Date landingTime;
+	private String takeoffTime;
+	private String landingTime;
 	private Double price;
 	private String airlineCode;
 	private String klass;
@@ -32,19 +31,21 @@ public class RawFlightData implements Serializable {
 		this.destinationCode = destinationCode;
 	}
 
-	public Date getTakeoffTime() {
+	
+
+	public String getTakeoffTime() {
 		return takeoffTime;
 	}
 
-	public void setTakeoffTime(Date takeoffTime) {
+	public void setTakeoffTime(String takeoffTime) {
 		this.takeoffTime = takeoffTime;
 	}
 
-	public Date getLandingTime() {
+	public String getLandingTime() {
 		return landingTime;
 	}
 
-	public void setLandingTime(Date landingTime) {
+	public void setLandingTime(String landingTime) {
 		this.landingTime = landingTime;
 	}
 
@@ -84,7 +85,7 @@ public class RawFlightData implements Serializable {
 
 	}
 
-	public RawFlightData(String originCode, String destinationCode, Date takeoffTime, Date landingTime, Double price, String airlineCode,
+	public RawFlightData(String originCode, String destinationCode, String takeoffTime, String landingTime, Double price, String airlineCode,
 			String klass, String flightNumber) {
 		super();
 		this.originCode = originCode;

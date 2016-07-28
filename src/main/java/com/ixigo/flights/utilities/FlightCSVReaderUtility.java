@@ -56,21 +56,15 @@ public class FlightCSVReaderUtility {
 	}
 
 	public static List<RawFlightData> readFlightDataCSV() {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy hh:mma");
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-
-		String currentDate = dateFormat.format(new Date());
-
 		String flightsDataCsv = "flightsData.csv";
 		List<RawFlightData> rawFlightDataList = new ArrayList<RawFlightData>();
 		try {
 			CsvReader csvReader = new CsvReader(flightsDataCsv);
 			csvReader.readHeaders();
 			while (csvReader.readRecord()) {
-				rawFlightDataList.add(new RawFlightData(csvReader.get("originCode"), csvReader.get("destinationCode"),
-						convertStringToDate(csvReader.get("takeoffTime"), currentDate, simpleDateFormat),
-						convertStringToDate(csvReader.get("landingTime"), currentDate, simpleDateFormat), Double.parseDouble(csvReader.get("price")),
-						csvReader.get("airlineCode"), csvReader.get("class"), csvReader.get("flightNumber")));
+				rawFlightDataList.add(new RawFlightData(csvReader.get("originCode"), csvReader.get("destinationCode"), csvReader.get("takeoffTime"),
+						csvReader.get("landingTime"), Double.parseDouble(csvReader.get("price")), csvReader.get("airlineCode"),
+						csvReader.get("class"), csvReader.get("flightNumber")));
 			}
 		} catch (Exception exception) {
 			logger.error("Excepiton occred  {}", exception);
@@ -78,6 +72,14 @@ public class FlightCSVReaderUtility {
 		return rawFlightDataList;
 	}
 
+	/**
+	 * Method is not in use currently
+	 * @param time
+	 * @param currentDate
+	 * @param simpleDateFormat
+	 * @return
+	 */
+	@SuppressWarnings("unused")
 	private static Date convertStringToDate(String time, String currentDate, SimpleDateFormat simpleDateFormat) {
 		time = time.trim().replace(" ", "");
 		time = currentDate + " " + time;

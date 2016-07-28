@@ -3,9 +3,11 @@ package com.ixigo.flights.models;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.ixigo.flights.validators.IValidatable;
+import com.ixigo.flights.validators.IValidator;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class FlightSearchRequest implements Serializable {
+public class FlightSearchRequest implements Serializable, IValidatable<FlightSearchRequest> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -17,7 +19,7 @@ public class FlightSearchRequest implements Serializable {
 
 	private AirLine airLine;
 
-	private FlightClass flightClass;
+	private String flightClass;
 
 	public FlightSearch getDepartureFlightBooking() {
 		return departureFlightBooking;
@@ -51,12 +53,17 @@ public class FlightSearchRequest implements Serializable {
 		this.airLine = airLine;
 	}
 
-	public FlightClass getFlightClass() {
+	public String getFlightClass() {
 		return flightClass;
 	}
 
-	public void setFlightClass(FlightClass flightClass) {
+	public void setFlightClass(String flightClass) {
 		this.flightClass = flightClass;
+	}
+
+	@Override
+	public Boolean validate(IValidator<FlightSearchRequest> validator) {
+		return validator.isValid(this);
 	}
 
 }

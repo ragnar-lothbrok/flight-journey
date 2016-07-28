@@ -6,41 +6,28 @@ http://localhost:8888/flights/airline
 {
 	"departureFlightBooking": {
 		"sourceAirport": {
-			"airportCode": "DEL",
-			"cityName": "",
-			"airportName": ""
+			"airportCode": "DEL"
 		},
 		"destintionAirport": {
-			"airportCode": "BOM",
-			"cityName": "",
-			"airportName": ""
+			"airportCode": "BOM"
 		},
 		"journeyDate": 1469719382848
 	},
 	"arrivalFlightBooking": {
 		"sourceAirport": {
-			"airportCode": "DEL",
-			"cityName": "",
-			"airportName": ""
+			"airportCode": "DEL"
 		},
 		"destintionAirport": {
-			"airportCode": "BOM",
-			"cityName": "",
-			"airportName": ""
+			"airportCode": "BOM"
 		},
 		"journeyDate": 1469719382848
 	},
 	"flightPassenger": {
-		"adultcount": 5,
-		"infantCount": 0,
-		"childCount": 0
+		"adultcount": 5
 	},
 	"airLine": {
 		"airlineCode": "G8",
 		"airlineName": ""
 	},
-	"flightClass": {
-		"flightClassCode": "",
-		"flightClassName": "Economy"
-	}
+	"flightClass": "Economy"
 }
