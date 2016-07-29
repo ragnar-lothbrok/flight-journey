@@ -15,6 +15,11 @@ import com.ixigo.flights.exceptions.AirLineSearchException;
 import com.ixigo.flights.models.AirLine;
 import com.ixigo.flights.utilities.FlightCSVReaderUtility;
 
+/**
+ * This will have method related to AirLine
+ * @author raghunandangupta
+ *
+ */
 @Service
 public class AirlineService {
 

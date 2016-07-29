@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+/**
+ * This class will contain single Flight Data
+ * @author raghunandangupta
+ *
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Flight implements Serializable {
 
@@ -24,6 +29,8 @@ public class Flight implements Serializable {
 	private String takeOffTime;
 
 	private String landingTime;
+
+	private String duration;
 
 	public Airport getSourceAirport() {
 		return sourceAirport;
@@ -87,6 +94,14 @@ public class Flight implements Serializable {
 
 	public void setLandingTime(String landingTime) {
 		this.landingTime = landingTime;
+	}
+
+	public String getDuration() {
+		return duration;
+	}
+
+	public void setDuration(String duration) {
+		this.duration = duration;
 	}
 
 }

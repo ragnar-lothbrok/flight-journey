@@ -11,6 +11,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.ixigo.flights.models.ErrorResource;
 
+/**
+ * This will haddle global exceptions.
+ * @author raghunandangupta
+ *
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 

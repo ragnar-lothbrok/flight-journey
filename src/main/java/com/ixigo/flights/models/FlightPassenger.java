@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+/**
+ * Class will contain passenger related information
+ * @author raghunandangupta
+ *
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FlightPassenger implements Serializable {
 

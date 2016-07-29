@@ -3,6 +3,7 @@ package com.ixigo.flights.utilities;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,12 @@ import com.ixigo.flights.models.AirLine;
 import com.ixigo.flights.models.Airport;
 import com.ixigo.flights.models.RawFlightData;
 
+/**
+ * Supporting method for Flight related information.
+ * Can be Database or Third Party APIs
+ * @author raghunandangupta
+ *
+ */
 public class FlightCSVReaderUtility {
 
 	private final static Logger logger = LoggerFactory.getLogger(FlightCSVReaderUtility.class);
@@ -55,6 +62,13 @@ public class FlightCSVReaderUtility {
 	}
 
 	public static List<RawFlightData> readFlightDataCSV() {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yyyy");
+		SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat("dd MMM yyyy kk:mm");
+		Calendar currDate = Calendar.getInstance();
+		String currentDate = simpleDateFormat.format(currDate.getTime());
+		currDate.add(Calendar.DATE, 1);
+		String nextDate = simpleDateFormat.format(currDate.getTime());
+
 		String flightsDataCsv = "flightsData.csv";
 		List<RawFlightData> rawFlightDataList = new ArrayList<RawFlightData>();
 		try {
@@ -63,7 +77,8 @@ public class FlightCSVReaderUtility {
 			while (csvReader.readRecord()) {
 				rawFlightDataList.add(new RawFlightData(csvReader.get("originCode"), csvReader.get("destinationCode"), csvReader.get("takeoffTime"),
 						csvReader.get("landingTime"), Double.parseDouble(csvReader.get("price")), csvReader.get("airlineCode"),
-						csvReader.get("class"), csvReader.get("flightNumber")));
+						csvReader.get("class"), csvReader.get("flightNumber"), convertStringToDate(csvReader.get("takeoffTime"),
+								csvReader.get("landingTime"), currentDate, currDate.getTime(), nextDate, simpleDateTimeFormat)));
 			}
 		} catch (Exception exception) {
 			logger.error("Excepiton occred  {}", exception);
@@ -72,18 +87,39 @@ public class FlightCSVReaderUtility {
 	}
 
 	/**
-	 * Method is not in use currently
+	 * 
 	 * @param time
 	 * @param currentDate
-	 * @param simpleDateFormat
+	 * @param simpleDateTimeFormat
 	 * @return
 	 */
-	@SuppressWarnings("unused")
-	private static Date convertStringToDate(String time, String currentDate, SimpleDateFormat simpleDateFormat) {
-		time = time.trim().replace(" ", "");
-		time = currentDate + " " + time;
+	private static String convertStringToDate(String takeOffTime, String landingTime, String currentDate, Date nextD, String nextDate,
+			SimpleDateFormat simpleDateTimeFormat) {
+		Date takeOffDate = null;
+		Date landingDate = null;
+		Long diffMs = null;
 		try {
-			return simpleDateFormat.parse(time);
+			takeOffTime = takeOffTime.trim().replace("  ", " ").replace("AM", "").replace("PM", "");
+			takeOffTime = currentDate + " " + takeOffTime;
+			takeOffDate = simpleDateTimeFormat.parse(takeOffTime);
+
+			landingTime = landingTime.trim().replace("  ", " ").replace("AM", "").replace("PM", "");
+
+			if (!landingTime.startsWith("00")) {
+				landingTime = currentDate + " " + landingTime;
+				landingDate = simpleDateTimeFormat.parse(landingTime);
+				diffMs = landingDate.getTime() - takeOffDate.getTime();
+			} else {
+				landingTime = nextDate + " " + landingTime;
+				landingDate = simpleDateTimeFormat.parse(landingTime);
+				diffMs = landingDate.getTime() - takeOffDate.getTime();
+			}
+
+			long diffSec = diffMs / 1000;
+			long min = diffSec / 60;
+			long hour = min / 60;
+			min = min % 60;
+			return hour + "h " + min + " m";
 		} catch (ParseException exception) {
 			logger.error("Exception occured while parsing date {}", exception);
 		}

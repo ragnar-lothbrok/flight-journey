@@ -2,6 +2,11 @@ package com.ixigo.flights.models;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+/**
+ * Exception format
+ * @author raghunandangupta
+ *
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ErrorResource {
 

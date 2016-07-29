@@ -7,6 +7,11 @@ import org.apache.lucene.analysis.core.LowerCaseTokenizer;
 import org.apache.lucene.analysis.ngram.NGramTokenFilter;
 import org.springframework.stereotype.Service;
 
+/**
+ * How data will be stored in Lucene
+ * @author raghunandangupta
+ *
+ */
 @Service
 public class NGramAnalyzer extends Analyzer {
 

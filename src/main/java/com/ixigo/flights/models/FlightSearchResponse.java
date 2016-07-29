@@ -4,6 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+/**
+ * Flight Search response containing Flight related information
+ * @author raghunandangupta
+ *
+ */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class FlightSearchResponse implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+/**
+ * AirPort related information
+ * @author raghunandangupta
+ *
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Airport implements Serializable {
 

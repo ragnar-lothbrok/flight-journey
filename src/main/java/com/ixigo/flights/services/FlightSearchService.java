@@ -11,12 +11,19 @@ import com.ixigo.flights.exceptions.AirPortSearchException;
 import com.ixigo.flights.models.AirLine;
 import com.ixigo.flights.models.Airport;
 import com.ixigo.flights.models.Flight;
+import com.ixigo.flights.models.FlightPassenger;
 import com.ixigo.flights.models.FlightSearch;
 import com.ixigo.flights.models.FlightSearchRequest;
 import com.ixigo.flights.models.FlightSearchResponse;
 import com.ixigo.flights.models.RawFlightData;
 import com.ixigo.flights.utilities.FlightCSVReaderUtility;
 import com.ixigo.flights.validators.FlightSearchRequestValidator;
+
+/**
+ * This will have method related to Flight Search request + Business Logic
+ * @author raghunandangupta
+ *
+ */
 
 @Service
 public class FlightSearchService {
@@ -31,7 +38,7 @@ public class FlightSearchService {
 
 	@Autowired
 	private AirlineService airlineService;
-	
+
 	@Autowired
 	private FlightPriceComparator flightPriceComparator;
 
@@ -51,11 +58,13 @@ public class FlightSearchService {
 				for (RawFlightData rawFlightData : rawFlightDataList) {
 					if ((flightSearchRequest.getAirLine() == null || flightSearchRequest.getAirLine().getAirlineCode() == null)
 							&& flightSearchRequest.getFlightClass() == null) {
-						flight = fetchFlight(rawFlightData, flightSearchRequest.getDepartureFlightBooking());
+						flight = fetchFlight(rawFlightData, flightSearchRequest.getDepartureFlightBooking(),
+								flightSearchRequest.getFlightPassenger());
 						if (flight != null) {
 							flightSearchResponse.getDepartureFlightList().add(flight);
 						} else if (isArrival) {
-							flight = fetchFlight(rawFlightData, flightSearchRequest.getArrivalFlightBooking());
+							flight = fetchFlight(rawFlightData, flightSearchRequest.getArrivalFlightBooking(),
+									flightSearchRequest.getFlightPassenger());
 							if (flight != null) {
 								flightSearchResponse.getArrivalFlightList().add(flight);
 							}
@@ -63,33 +72,39 @@ public class FlightSearchService {
 					} else if (flightSearchRequest.getFlightClass() == null
 							&& (flightSearchRequest.getAirLine() != null && flightSearchRequest.getAirLine().getAirlineCode() != null
 									&& flightSearchRequest.getAirLine().getAirlineCode().equalsIgnoreCase(rawFlightData.getAirlineCode()))) {
-						flight = fetchFlight(rawFlightData, flightSearchRequest.getDepartureFlightBooking());
+						flight = fetchFlight(rawFlightData, flightSearchRequest.getDepartureFlightBooking(),
+								flightSearchRequest.getFlightPassenger());
 						if (flight != null) {
 							flightSearchResponse.getDepartureFlightList().add(flight);
 						} else if (isArrival) {
-							flight = fetchFlight(rawFlightData, flightSearchRequest.getArrivalFlightBooking());
+							flight = fetchFlight(rawFlightData, flightSearchRequest.getArrivalFlightBooking(),
+									flightSearchRequest.getFlightPassenger());
 							if (flight != null) {
 								flightSearchResponse.getArrivalFlightList().add(flight);
 							}
 						}
 					} else if (flightSearchRequest.getAirLine() == null
 							&& flightSearchRequest.getFlightClass().equalsIgnoreCase(rawFlightData.getKlass())) {
-						flight = fetchFlight(rawFlightData, flightSearchRequest.getDepartureFlightBooking());
+						flight = fetchFlight(rawFlightData, flightSearchRequest.getDepartureFlightBooking(),
+								flightSearchRequest.getFlightPassenger());
 						if (flight != null) {
 							flightSearchResponse.getDepartureFlightList().add(flight);
 						} else if (isArrival) {
-							flight = fetchFlight(rawFlightData, flightSearchRequest.getArrivalFlightBooking());
+							flight = fetchFlight(rawFlightData, flightSearchRequest.getArrivalFlightBooking(),
+									flightSearchRequest.getFlightPassenger());
 							if (flight != null) {
 								flightSearchResponse.getArrivalFlightList().add(flight);
 							}
 						}
 					} else if (flightSearchRequest.getFlightClass().equalsIgnoreCase(rawFlightData.getKlass())
 							&& flightSearchRequest.getAirLine().getAirlineCode().equalsIgnoreCase(rawFlightData.getAirlineCode())) {
-						flight = fetchFlight(rawFlightData, flightSearchRequest.getDepartureFlightBooking());
+						flight = fetchFlight(rawFlightData, flightSearchRequest.getDepartureFlightBooking(),
+								flightSearchRequest.getFlightPassenger());
 						if (flight != null) {
 							flightSearchResponse.getDepartureFlightList().add(flight);
 						} else if (isArrival) {
-							flight = fetchFlight(rawFlightData, flightSearchRequest.getArrivalFlightBooking());
+							flight = fetchFlight(rawFlightData, flightSearchRequest.getArrivalFlightBooking(),
+									flightSearchRequest.getFlightPassenger());
 							if (flight != null) {
 								flightSearchResponse.getArrivalFlightList().add(flight);
 							}
@@ -97,10 +112,10 @@ public class FlightSearchService {
 					}
 				}
 			}
-			if(flightSearchResponse.getArrivalFlightList() != null){
+			if (flightSearchResponse.getArrivalFlightList() != null) {
 				flightSearchResponse.getArrivalFlightList().sort(flightPriceComparator);
 			}
-			if(flightSearchResponse.getDepartureFlightList() != null){
+			if (flightSearchResponse.getDepartureFlightList() != null) {
 				flightSearchResponse.getDepartureFlightList().sort(flightPriceComparator);
 			}
 		} catch (Exception exception) {
@@ -116,17 +131,17 @@ public class FlightSearchService {
 	 * 
 	 * @param rawFlightData
 	 * @param flightBooking
+	 * @param flightPassenger
+	 *            TODO
 	 * @return
 	 */
-	private Flight fetchFlight(RawFlightData rawFlightData, FlightSearch flightBooking) {
+	private Flight fetchFlight(RawFlightData rawFlightData, FlightSearch flightBooking, FlightPassenger flightPassenger) {
 		Flight flight = null;
 		if (flightBooking.getSourceAirport().getAirportCode().equalsIgnoreCase(rawFlightData.getOriginCode())
 				&& flightBooking.getDestintionAirport().getAirportCode().equalsIgnoreCase(rawFlightData.getDestinationCode())) {
 			flight = new Flight();
 			flight.setLandingTime(rawFlightData.getLandingTime());
 			flight.setTakeOffTime(rawFlightData.getTakeoffTime());
-			flight.setPrice(rawFlightData.getPrice());
-
 			List<Airport> airPortList = airPortService.allAirports();
 			Airport airport = new Airport();
 			airport.setAirportCode(rawFlightData.getOriginCode());
@@ -153,9 +168,19 @@ public class FlightSearchService {
 				flight.setAirLine(airLineList.get(index));
 			}
 
+			flight.setPrice(rawFlightData.getPrice());
+			if (flightPassenger != null) {
+				if (flightPassenger.getAdultcount() != null && flightPassenger.getAdultcount() > 0) {
+					flight.setPrice(rawFlightData.getPrice() * flightPassenger.getAdultcount());
+				} else if (flightPassenger.getChildCount() != null && flightPassenger.getChildCount() > 0) {
+					flight.setPrice(rawFlightData.getPrice() * flightPassenger.getChildCount());
+				}
+			}
 			flight.setFlightNumber(rawFlightData.getFlightNumber());
 
 			flight.setAirlineClass(rawFlightData.getKlass());
+
+			flight.setDuration(rawFlightData.getDuration());
 
 		}
 		return flight;

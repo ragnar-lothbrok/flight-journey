@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+/**
+ * This class is a single flight search request.
+ * @author raghunandangupta
+ *
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FlightSearch implements Serializable {
 

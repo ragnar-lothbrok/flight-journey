@@ -6,6 +6,11 @@ import org.springframework.stereotype.Service;
 
 import com.ixigo.flights.models.Flight;
 
+/**
+ * This will sort flight response on the basis of Price
+ * @author raghunandangupta
+ *
+ */
 @Service
 public class FlightPriceComparator implements Comparator<Flight> {
 

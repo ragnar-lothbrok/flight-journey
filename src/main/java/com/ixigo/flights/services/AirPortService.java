@@ -18,6 +18,12 @@ import com.ixigo.flights.exceptions.AirPortSearchException;
 import com.ixigo.flights.models.Airport;
 import com.ixigo.flights.utilities.FlightCSVReaderUtility;
 
+/**
+ * This will have method related to Airport
+ * 
+ * @author raghunandangupta
+ *
+ */
 @Service
 public class AirPortService {
 
@@ -28,6 +34,10 @@ public class AirPortService {
 	@Autowired
 	private TextIndexAndSearchService textIndexAndSearchService;
 
+	/**
+	 * This will cache Airport Data.
+	 * @param timeout
+	 */
 	@Autowired
 	public AirPortService(@Value("${flight.airline.timeout}") Integer timeout) {
 		airPortCache = CacheBuilder.newBuilder().refreshAfterWrite(timeout, TimeUnit.MINUTES).build(new CacheLoader<String, List<Airport>>() {
@@ -40,10 +50,25 @@ public class AirPortService {
 		});
 	}
 
+	/**
+	 * This method will search Airport for a Search Key
+	 * @param searchKey
+	 * @return
+	 * @throws ExecutionException
+	 */
 	public List<Airport> searchAirPorts(String searchKey) throws ExecutionException {
-		return textIndexAndSearchService.search(searchKey);
+		List<Airport> airportList = textIndexAndSearchService.search(searchKey);
+		if (airportList == null || airportList.size() == 0) {
+			airportList = airPortCache.get(FlightConstants.AIRPORT_KEY);
+			airportList.subList(0, (airportList.size() > 10 ? 10 : airportList.size()));
+		}
+		return airportList;
 	}
 
+	/**
+	 * This will return All Airports
+	 * @return
+	 */
 	public List<Airport> allAirports() {
 		try {
 			List<Airport> airPosrtList = airPortCache.get(FlightConstants.AIRPORT_KEY);

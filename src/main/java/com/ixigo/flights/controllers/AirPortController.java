@@ -19,6 +19,11 @@ import com.ixigo.flights.exceptions.AirPortSearchException;
 import com.ixigo.flights.models.Airport;
 import com.ixigo.flights.services.AirPortService;
 
+/**
+ * This will return airport related information
+ * @author raghunandangupta
+ *
+ */
 @Controller
 @RequestMapping("/airport")
 public class AirPortController {

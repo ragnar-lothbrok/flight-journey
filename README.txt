@@ -1,8 +1,9 @@
-http://localhost:8888/flights/airport?airPort=mu
+http://localhost:8888/fms/airport?airPort=mu
 [{"airportCode":"BOM","cityName":"Mumbai","airportName":"DEL Chatarpati Shivaji Airport"}]
 
-http://localhost:8888/flights/airline
+http://localhost:8888/fms/airline
 
+http://localhost:8888/fms/flights
 
 {
 	"departureFlightBooking": {

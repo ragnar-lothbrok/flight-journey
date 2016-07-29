@@ -30,6 +30,11 @@ import org.springframework.stereotype.Service;
 
 import com.ixigo.flights.models.Airport;
 
+/**
+ * This will index & search data in Lucene
+ * @author raghunandangupta
+ *
+ */
 @Service
 public class TextIndexAndSearchService {
 

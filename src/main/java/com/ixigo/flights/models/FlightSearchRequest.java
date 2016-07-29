@@ -6,6 +6,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ixigo.flights.validators.IValidatable;
 import com.ixigo.flights.validators.IValidator;
 
+/**
+ * Flight search request which will contain all possible parameters on the basis of file can be searched.
+ * @author raghunandangupta
+ *
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FlightSearchRequest implements Serializable, IValidatable<FlightSearchRequest> {
 

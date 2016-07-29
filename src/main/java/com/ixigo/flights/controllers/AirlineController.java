@@ -18,6 +18,11 @@ import com.ixigo.flights.exceptions.AirLineSearchException;
 import com.ixigo.flights.models.AirLine;
 import com.ixigo.flights.services.AirlineService;
 
+/**
+ * This will return AirLine related information
+ * @author raghunandangupta
+ *
+ */
 @Controller
 @RequestMapping("/airline")
 public class AirlineController {

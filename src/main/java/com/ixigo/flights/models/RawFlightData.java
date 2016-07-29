@@ -2,6 +2,11 @@ package com.ixigo.flights.models;
 
 import java.io.Serializable;
 
+/**
+ * Data which we will get from third party APIs
+ * @author raghunandangupta
+ *
+ */
 public class RawFlightData implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -14,6 +19,7 @@ public class RawFlightData implements Serializable {
 	private String airlineCode;
 	private String klass;
 	private String flightNumber;
+	private String duration;
 
 	public String getOriginCode() {
 		return originCode;
@@ -30,8 +36,6 @@ public class RawFlightData implements Serializable {
 	public void setDestinationCode(String destinationCode) {
 		this.destinationCode = destinationCode;
 	}
-
-	
 
 	public String getTakeoffTime() {
 		return takeoffTime;
@@ -86,7 +90,7 @@ public class RawFlightData implements Serializable {
 	}
 
 	public RawFlightData(String originCode, String destinationCode, String takeoffTime, String landingTime, Double price, String airlineCode,
-			String klass, String flightNumber) {
+			String klass, String flightNumber,String duration) {
 		super();
 		this.originCode = originCode;
 		this.destinationCode = destinationCode;
@@ -96,6 +100,15 @@ public class RawFlightData implements Serializable {
 		this.airlineCode = airlineCode;
 		this.klass = klass;
 		this.flightNumber = flightNumber;
+		this.duration = duration;
+	}
+
+	public String getDuration() {
+		return duration;
+	}
+
+	public void setDuration(String duration) {
+		this.duration = duration;
 	}
 
 	@Override
